@@ -1,7 +1,12 @@
 # Initialize variables
-pool_volume = int(input("Enter pool volume in liters: "))
-filter_capacity = int(input("Enter filter capacity in liters: "))
-current_water_level = 0
+while True:
+    try:
+        pool_volume = int(input("Enter pool volume in liters: "))
+        filter_capacity = int(input("Enter filter capacity in liters: "))
+        current_water_level = 0
+        break
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
 
 # Display menu options
 menu = {
@@ -40,7 +45,16 @@ def waste():
     global current_water_level
     print("Activating waste valve...")
     print("Draining water from the pool without passing through the filter...")
-    current_water_level -= int(input("Enter amount of water to drain in liters: "))
+    while True:
+        try:
+            amount = int(input("Enter amount of water to drain in liters: "))
+            if amount > current_water_level:
+                print("Error: amount to drain exceeds current water level. Please try again.")
+            else:
+                current_water_level -= amount
+                break
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
     print("Current water level: {} liters".format(current_water_level))
 
 
@@ -80,7 +94,14 @@ while True:
         print("Invalid option. Please try again.")
 
     # Ask if user wants to perform another action
-    another_action = input("Perform another action? (Y/N): ").upper()
+    while True:
+        try:
+            another_action = input("Perform another action? (Y/N): ").upper()
+            if another_action not in ['Y', 'N']:
+                raise ValueError
+            break
+        except ValueError:
+            print("Invalid input. Please enter either 'Y' or 'N'.")
     if another_action == "N":
         break
 
